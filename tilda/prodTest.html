@@ -1,0 +1,114 @@
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // ВСТАВЬТЕ СЮДА ID ВАШЕГО ZERO BLOCK:
+    var zeroBlockId = '#rec2432125021';
+    
+    var zeroBlock = document.querySelector(zeroBlockId);
+    // console.log(zeroBlock);
+
+    var standardProducts = document.querySelector('#rec2430353611');
+    var standardProd = standardProducts.querySelectorAll('.js-store-product');
+
+    console.log(standardProducts);
+    console.log(standardProd);
+
+    
+    if (!zeroBlock || standardProducts.length === 0) return;
+    
+    var zeroContainer = zeroBlock.querySelector('.t396__artboard');
+    var originalCard = zeroBlock.querySelector('.my-product-card'); // Наш шаблон для клонирования
+    
+    if (!originalCard) return;
+
+    // Создаем специальный контейнер-сетку внутри Zero Block
+    var gridContainer = document.createElement('div');
+    gridContainer.className = 'my-products-grid';
+    zeroContainer.appendChild(gridContainer);
+    
+    // Прячем исходную карточку-шаблон, чтобы она не дублировалась
+    originalCard.style.display = 'none';
+    
+    // Перебираем товары из скрытого каталога (например, ST310N или ST200)
+    standardProducts.forEach(function(product) {
+        var title = product.querySelector('.js-store-prod-title')?.innerText || '';
+        // console.log(title);
+
+        // var text = product.querySelector('.js-store-prod-text')?.innerText || '';
+        // var price = product.querySelector('.js-store-prod-price')?.innerText || '';
+        // var imgUrl = product.querySelector('.js-store-prod-img')?.getAttribute('data-original') || '';
+        // var prodId = product.getAttribute('data-product-id');
+
+        // КЛОНИРОВАНИЕ: Создаем глубокую копию группы из Zero Block
+        var clonedCard = originalCard.cloneNode(true);
+        clonedCard.style.display = 'flex'; // Делаем клон видимым внутри CSS Grid
+
+        // Наполняем клон данными из каталога
+        var cTitle = clonedCard.querySelector('.js-custom-title');
+        if (cTitle) cTitle.innerText = title;
+
+        // var cText = clonedCard.querySelector('.js-custom-text');
+        // if (cText) cText.innerText = text;
+
+        // var cPrice = clonedCard.querySelector('.js-custom-price');
+        // if (cPrice) cPrice.innerText = price;
+
+        // var cImg = clonedCard.querySelector('.js-custom-img img');
+        // if (cImg && imgUrl) cImg.src = imgUrl;
+
+        // // Связываем кнопку клона с корзиной для правильного ID товара
+        // var cBtn = clonedCard.querySelector('.js-custom-btn a') || clonedCard.querySelector('.js-custom-btn');
+        // if (cBtn) {
+        //     cBtn.setAttribute('href', '#order:#!/tproduct/' + prodId);
+        // }
+
+        // // Очищаем фиксированные координаты элементов Tilda внутри клона
+        // clonedCard.querySelectorAll('.t396__elem').forEach(function(el) {
+        //     el.style.left = 'auto';
+        //     el.style.top = 'auto';
+        // });
+
+        // Помещаем готовый клон в CSS-сетку
+        gridContainer.appendChild(clonedCard);
+    });
+
+    // Делаем высоту самого Zero Block автоматической, подстраиваясь под количество товаров
+    // zeroContainer.style.height = 'auto';
+    // zeroContainer.style.overflow = 'hidden';
+    // gridContainer.style.position = 'relative';
+    // zeroBlock.querySelector('.t396__carrier').style.height = 'auto';
+});
+
+
+
+
+
+
+
+
+
+
+
+// 1. Вытаскиваем из скрытого каталога реальную сгенерированную ссылку на страницу товара
+var realProductLink = product.querySelector('a[href*="/tproduct/"]')?.getAttribute('href') || '#';
+
+// 2. Находим кнопку или ссылку внутри нашего клонированного Zero Block
+var cBtn = clonedCard.querySelector('.js-custom-btn a') || clonedCard.querySelector('.js-custom-btn');
+
+if (cBtn && realProductLink !== '#') {
+    // Присваиваем кнопке адрес отдельной страницы товара
+    cBtn.setAttribute('href', realProductLink);
+    
+    // Сбрасываем внутренние обработчики Tilda, чтобы не открывался попап
+    cBtn.removeAttribute('data-elem-id'); 
+}
+
+// 3. ОПЦИОНАЛЬНО: Сделайте так, чтобы при клике на КАРТИНКУ тоже переходило на страницу товара
+var cImg = clonedCard.querySelector('.js-custom-img a') || clonedCard.querySelector('.js-custom-img');
+if (cImg && realProductLink !== '#') {
+    cImg.setAttribute('href', realProductLink);
+    cImg.style.cursor = 'pointer';
+}
+
+</script>
+
+

@@ -1,0 +1,63 @@
+<style>#rec2430353611 { display: none !important; }</style>
+<script>
+function startCloning() {
+    var zeroBlockId = '#rec2432125021';
+    var zeroBlock = document.querySelector(zeroBlockId);
+    var standardProducts = document.querySelector('#rec2430353611');
+
+    if (!zeroBlock || !standardProducts) return;
+    var standardProd = standardProducts.querySelectorAll('.js-product.t-store__card');
+    
+    if (standardProd.length < 2) return; 
+    
+    if (zeroBlock.classList.contains('js-already-cloned')) return;
+    zeroBlock.classList.add('js-already-cloned');
+
+    var zeroContainer = zeroBlock.querySelector('.t396__artboard');
+    var gridContainer = zeroBlock.querySelector('.t396__artboard .glav_catalog_container');
+    var originalCard = zeroBlock.querySelector('.my-product-card');
+    if (!originalCard) return;
+    originalCard.style.display = 'none';
+    
+    standardProd.forEach(function(product) {
+        var titleElement = product.querySelector('.js-store-prod-name') || product.querySelector('.js-store-prod-title');
+        var title = titleElement ? titleElement.innerText : '';
+        var textElement = product.querySelector('.js-store-prod-descr.t-store__card__descr');
+        var text = textElement ? textElement.innerText : '';
+        var realProductLink = product.querySelector('a[href*="/tproduct/"]')?.getAttribute('href') || '#';
+        var imgUrl = product.querySelector('.js-product-img.t-store__card__bgimg')?.getAttribute('data-original') || '';
+        
+        var clonedCard = originalCard.cloneNode(true);
+        clonedCard.style.display = 'block'; 
+
+        var cTitle = clonedCard.querySelectorAll('.js-custom-title .tn-atom');
+        cTitle.forEach(function(el) { el.innerText = title; });
+        var cText = clonedCard.querySelector('.js-custom-description .tn-atom');
+        if (cText) cText.innerText = text;
+        var cBtn = clonedCard.querySelector('.my_btn_ob_prod .tn-atom');
+        if (cBtn) cBtn.href = realProductLink;
+        var cImg = clonedCard.querySelector('.js-custom-img .tn-atom');
+        if (cImg && imgUrl) {
+          cImg.style.backgroundImage = 'url("' + imgUrl + '")';
+          cImg.setAttribute('data-original', imgUrl);
+        }
+
+        gridContainer.appendChild(clonedCard);
+    });
+
+    gridContainer.style.height = 'auto';
+    gridContainer.style.width = '100%';
+    zeroContainer.style.height = 'auto';
+    gridContainer.style.position = 'relative';
+    zeroBlock.querySelector('.t396__carrier').style.height = 'auto';
+    observer.disconnect();
+}
+
+var observer = new MutationObserver(function(mutations) { startCloning(); });
+
+document.addEventListener("DOMContentLoaded", function() {
+    var targetBlock = document.querySelector('#rec2430353611');
+    if (targetBlock) observer.observe(targetBlock, { childList: true, subtree: true });
+    startCloning();
+});
+</script>

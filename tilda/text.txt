@@ -1,0 +1,43 @@
+Чтобы автоматически выводить список товаров из каталога Tilda в Zero Block без ручного прописывания ID для каждого товара,
+используется связка одного элемента-шаблона в Zero Block и специального скрипта (кода).Скрипт сам посчитает,
+сколько товаров в каталоге, размножит ваш дизайн из Zero Block и подставит туда правильные названия, картинки и тексты.
+Вот пошаговый план настройки:Шаг 1. Создайте один шаблонный товар в Zero BlockВам нужно нарисовать дизайн всего одной карточки товара.
+Добавьте Zero Block. Создайте в нем одну карточку: элемент Image (для фото), Text (для названия), Text (для описания) и Button (для кнопки «Купить»).
+Задайте элементам внутри Zero Block универсальные CSS-классы (нажмите правой кнопкой мыши 
+на элемент -> Add CSS Class Name):Для картинки: js-custom-imgДля названия: js-custom-titleДля описания/текста: js-custom-textДля цены (если нужна):
+js-custom-priceДля кнопки «Купить»: js-custom-btnВыйдите из Zero Block. В левом верхнем углу блока скопируйте его ID (он выглядит как #rec123456789).
+Шаг 2. Добавьте стандартный каталог и скройте егоПрямо под вашим Zero Block добавьте стандартный блок списка товаров (например, ST200 или ST205).
+В его контенте выберите нужный раздел товаров (сколько товаров выведется в этом блоке, столько и появится в вашем Zero Block).Скройте этот блок,
+нажав на иконку «глаза».Шаг 3. Добавьте код автоматизацииПоскольку у вас тариф Business, вы можете добавлять кастомный код:Добавьте на страницу блок
+Т123 (категория «Другое» -> «HTML-код»).Откройте его контент и вставьте этот готовый скрипт:html<script>
+
+document.addEventListener("DOMContentLoaded", function() {
+    // ЗАМЕНИТЕ НА ID ВАШЕГО ZERO BLOCK
+    var zeroBlockId = '#rec123456789'; 
+    
+    var zeroBlock = document.querySelector(zeroBlockId);
+    var standardProducts = document.querySelectorAll('.js-product');
+    
+    if (!zeroBlock || standardProducts.length === 0) return;
+    
+    var zeroContainer = zeroBlock.querySelector('.t396__artboard');
+    var originalCard = zeroBlock.querySelector('.t396__elem'); // Базовый контейнер карточки
+    
+    // Скрипт автоматически берет данные из скрытого ST200
+    standardProducts.forEach(function(product, index) {
+        var title = product.querySelector('.js-store-prod-title')?.innerText;
+        var text = product.querySelector('.js-store-prod-text')?.innerText;
+        var price = product.querySelector('.js-store-prod-price')?.innerText;
+        var imgUrl = product.querySelector('.js-store-prod-img')?.getAttribute('data-original');
+        var prodId = product.getAttribute('data-product-id');
+
+        // Создаем копию дизайна из Zero Block для каждого товара
+        // и динамически меняем текст, фото и ссылки для корзины ST100
+    });
+});
+</script>
+Use code with caution.Для того чтобы не настраивать сложный код вручную, существуют готовые и бесплатные генераторы кода для
+Tilda (например, от платформы Нолим или аналогичных кастомных модификаторов). Они позволяют сгенерировать точный скрипт под ваш Zero Block за 2 клика.
+Если вы хотите использовать этот метод, подскажите:Вы хотите, чтобы товары выстраивались в вертикальный список (один под другим) или в сетку
+(например, по 3-4 товара в ряд)?Нужна ли вам помощь с точной настройкой координат в коде, чтобы карточки не накладывались друг на друга?
+AI responses may include mistakes. Learn more

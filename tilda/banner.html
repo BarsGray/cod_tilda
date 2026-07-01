@@ -1,0 +1,99 @@
+<script>
+  window.addEventListener('load', () => {
+    let bunner_btn_prev      = document.querySelector('#molecule-1782397520137000012');
+    let bunner_btn_next      = document.querySelector('#molecule-1782397561317000013');
+    let bunner_list          = document.querySelectorAll('.bunner_list .tn-atom');
+    let bunner_img           = document.querySelectorAll('.bunner_img img.tn-atom__img');
+    let bunner_active_color  = '#212f79';
+    let bunner_defoult_color = '#8b9fb3';
+    let bunner_list_count    = 0;
+    let isClicked            = false;
+    let anim                 = document.querySelector('#sbs-2430182651-1782484740537000004');
+    const DALEY              = 500;
+
+    function change_color_bunner_list() {
+      bunner_list.forEach(e => {
+        e.style.color = bunner_defoult_color;
+      });
+    }
+    
+    function change_img_bunner() {
+      bunner_img.forEach(e => {
+        e.style.opacity = 0;
+        e.style.right = 0;
+      });
+    }
+    
+    function set_active_color() {
+      change_color_bunner_list();
+      bunner_list[bunner_list_count].style.color = bunner_active_color;
+      bunner_list[bunner_list_count].style.opacity = 1;
+      setTimeout(() => {
+        change_img_bunner();
+        bunner_img[bunner_list_count].style.opacity = 1;
+      }, DALEY);
+      setTimeout(() => {
+        anim.style.animation = 'none';
+        isClicked = false;
+      }, DALEY * 2);
+    }
+
+    function aminationTimeout() {
+      set_active_color();
+      isClicked = true;
+      anim.style.animation = 'sbs-2430182651-1782484740537000004 1s linear forwards';
+    }
+
+    function movePrevSlide() {
+      if (isClicked) return;
+      bunner_list_count--;
+      if(bunner_list_count < 0) bunner_list_count = bunner_list.length - 1;
+      aminationTimeout();
+    }
+    
+    function moveNextSlide() {
+      if (isClicked) return;
+      bunner_list_count++;
+      if(bunner_list_count > bunner_list.length - 1) bunner_list_count = 0;
+      aminationTimeout();
+    }
+    
+    change_color_bunner_list();
+    set_active_color();
+    change_img_bunner();
+
+    bunner_btn_prev.addEventListener('click', movePrevSlide);
+    bunner_btn_next.addEventListener('click', moveNextSlide);
+
+    moveNextSlide();
+    setInterval(moveNextSlide, 3000);
+  });
+</script>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function() {
+    // ЗАМЕНИТЕ НА ID ВАШЕГО ZERO BLOCK
+    var zeroBlockId = '#rec123456789'; 
+    
+    var zeroBlock = document.querySelector(zeroBlockId);
+    var standardProducts = document.querySelectorAll('.js-product');
+    
+    if (!zeroBlock || standardProducts.length === 0) return;
+    
+    var zeroContainer = zeroBlock.querySelector('.t396__artboard');
+    var originalCard = zeroBlock.querySelector('.t396__elem'); // Базовый контейнер карточки
+    
+    // Скрипт автоматически берет данные из скрытого ST200
+    standardProducts.forEach(function(product, index) {
+        var title = product.querySelector('.js-store-prod-title')?.innerText;
+        var text = product.querySelector('.js-store-prod-text')?.innerText;
+        var price = product.querySelector('.js-store-prod-price')?.innerText;
+        var imgUrl = product.querySelector('.js-store-prod-img')?.getAttribute('data-original');
+        var prodId = product.getAttribute('data-product-id');
+
+        // Создаем копию дизайна из Zero Block для каждого товара
+        // и динамически меняем текст, фото и ссылки для корзины ST100
+    });
+});
+</script>

@@ -1,0 +1,253 @@
+<script>
+
+document.addEventListener("DOMContentLoaded", function() {
+    // ЗАМЕНИТЕ НА ID ВАШЕГО ZERO BLOCK
+    var zeroBlockId = '#rec123456789'; 
+    
+    var zeroBlock = document.querySelector(zeroBlockId);
+    var standardProducts = document.querySelectorAll('.js-product');
+    
+    if (!zeroBlock || standardProducts.length === 0) return;
+    
+    var zeroContainer = zeroBlock.querySelector('.t396__artboard');
+    var originalCard = zeroBlock.querySelector('.t396__elem'); // Базовый контейнер карточки
+    
+    // Скрипт автоматически берет данные из скрытого ST200
+    standardProducts.forEach(function(product, index) {
+        var title = product.querySelector('.js-store-prod-title')?.innerText;
+        var text = product.querySelector('.js-store-prod-text')?.innerText;
+        var price = product.querySelector('.js-store-prod-price')?.innerText;
+        var imgUrl = product.querySelector('.js-store-prod-img')?.getAttribute('data-original');
+        var prodId = product.getAttribute('data-product-id');
+
+        // Создаем копию дизайна из Zero Block для каждого товара
+        // и динамически меняем текст, фото и ссылки для корзины ST100
+    });
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // ВСТАВЬТЕ СЮДА ID ВАШЕГО ZERO BLOCK:
+    var zeroID = '#rec87654321'; 
+    
+    var zeroBlock = document.querySelector(zeroID);
+    var hiddenBlock = document.querySelector('.js-store'); // Находит скрытый ST310N
+    
+    if (!zeroBlock || !hiddenBlock) return;
+    
+    var products = hiddenBlock.querySelectorAll('.js-product');
+    var artboard = zeroBlock.querySelector('.t396__artboard');
+    
+    // Получаем оригинальные элементы шаблона из Zero Block
+    var tImg = zeroBlock.querySelector('.js-custom-img');
+    var tTitle = zeroBlock.querySelector('.js-custom-title');
+    var tText = zeroBlock.querySelector('.js-custom-text');
+    var tPrice = zeroBlock.querySelector('.js-custom-price');
+    var tBtn = zeroBlock.querySelector('.js-custom-btn');
+    
+    if(!tTitle) return;
+
+    // Скрываем первоначальные шаблонные элементы, чтобы они не дублировались
+    if(tImg) tImg.style.display = 'none';
+    tTitle.style.display = 'none';
+    if(tText) tText.style.display = 'none';
+    if(tPrice) tPrice.style.display = 'none';
+    if(tBtn) tBtn.style.display = 'none';
+
+    // Настройки сетки (плитки)
+    var cardsPerRow = 3;       // Количество товаров в один ряд
+    var offsetX = 360;         // Расстояние между карточками по горизонтали (в пикселях)
+    var offsetY = 450;         // Расстояние между рядами по вертикали (в пикселях)
+    
+    var startTop = parseFloat(tTitle.style.top);
+    var startLeft = parseFloat(tTitle.style.left);
+
+    products.forEach(function(prod, index) {
+        var pTitle = prod.querySelector('.js-store-prod-title')?.innerText || '';
+        var pText = prod.querySelector('.js-store-prod-text')?.innerText || '';
+        var pPrice = prod.querySelector('.js-store-prod-price')?.innerText || '';
+        var pImg = prod.querySelector('.js-store-prod-img')?.getAttribute('data-original') || '';
+        var pId = prod.getAttribute('data-product-id');
+        
+        // Считаем координаты для сетки
+        // var row = Math.floor(index / cardsPerRow);
+        // var col = index % cardsPerRow;
+        
+        // var currentOffsetX = col * offsetX;
+        // var currentOffsetY = row * offsetY;
+
+        // Клонируем и позиционируем Название
+        var cloneTitle = tTitle.cloneNode(true);
+        cloneTitle.innerText = pTitle;
+        // cloneTitle.style.display = 'block';
+        // cloneTitle.style.left = (parseFloat(tTitle.style.left) + currentOffsetX) + 'px';
+        // cloneTitle.style.top = (parseFloat(tTitle.style.top) + currentOffsetY) + 'px';
+        artboard.appendChild(cloneTitle);
+
+        // Клонируем и позиционируем Текст описания
+        if (tText) {
+            var cloneText = tText.cloneNode(true);
+            cloneText.innerText = pText;
+            cloneText.style.display = 'block';
+            cloneText.style.left = (parseFloat(tText.style.left) + currentOffsetX) + 'px';
+            cloneText.style.top = (parseFloat(tText.style.top) + currentOffsetY) + 'px';
+            artboard.appendChild(cloneText);
+        }
+
+        // Клонируем и позиционируем Картинку
+        if (tImg) {
+            var cloneImg = tImg.cloneNode(true);
+            var imgTag = cloneImg.querySelector('img');
+            if(imgTag) imgTag.src = pImg;
+            cloneImg.style.display = 'block';
+            cloneImg.style.left = (parseFloat(tImg.style.left) + currentOffsetX) + 'px';
+            cloneImg.style.top = (parseFloat(tImg.style.top) + currentOffsetY) + 'px';
+            artboard.appendChild(cloneImg);
+        }
+
+        // Клонируем и позиционируем Цену
+        if (tPrice) {
+            var clonePrice = tPrice.cloneNode(true);
+            clonePrice.innerText = pPrice;
+            clonePrice.style.display = 'block';
+            clonePrice.style.left = (parseFloat(tPrice.style.left) + currentOffsetX) + 'px';
+            clonePrice.style.top = (parseFloat(tPrice.style.top) + currentOffsetY) + 'px';
+            artboard.appendChild(clonePrice);
+        }
+
+        // Клонируем и позиционируем Кнопку «Купить»
+        if (tBtn) {
+            var cloneBtn = tBtn.cloneNode(true);
+            var linkTag = cloneBtn.querySelector('a') || cloneBtn;
+            linkTag.setAttribute('href', '#order:#!/tproduct/' + pId);
+            cloneBtn.style.display = 'block';
+            cloneBtn.style.left = (parseFloat(tBtn.style.left) + currentOffsetX) + 'px';
+            cloneBtn.style.top = (parseFloat(tBtn.style.top) + currentOffsetY) + 'px';
+            artboard.appendChild(cloneBtn);
+        }
+    });
+    
+    // Автоматически увеличиваем высоту Zero Block под количество рядов товаров
+    var totalRows = Math.ceil(products.length / cardsPerRow);
+    var newHeight = totalRows * offsetY + 100; 
+    artboard.style.height = newHeight + 'px';
+    zeroBlock.querySelector('.t396__carrier').style.height = newHeight + 'px';
+});
+</script>
+
+
+
+<style>
+/* Сетка, в которую будут выстраиваться клонированные карточки */
+.my-products-grid {
+    display: grid !important;
+    position: absolute;
+    top: 40px;  /* Отступ сетки от верхнего края Zero Block */
+    left: 5%;   /* Боковые отступы */
+    width: 90% !important;
+    grid-template-columns: repeat(3, 1fr) !important; /* По умолчанию 3 карточки в ряд */
+    gap: 30px !important;                             /* Расстояние между карточками */
+    box-sizing: border-box;
+}
+
+/* Сброс абсолютного позиционирования Tilda для адаптивности клонов */
+.my-product-card {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.my-product-card .t396__elem {
+    position: relative !important;
+}
+
+/* Настройки сетки для мобильных устройств */
+@media screen and (max-width: 960px) {
+    .my-products-grid {
+        grid-template-columns: repeat(2, 1fr) !important; /* 2 в ряд на планшетах */
+    }
+}
+@media screen and (max-width: 640px) {
+    .my-products-grid {
+        grid-template-columns: repeat(1, 1fr) !important; /* 1 в ряд на телефонах */
+    }
+}
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // ВСТАВЬТЕ СЮДА ID ВАШЕГО ZERO BLOCK:
+    var zeroBlockId = '#rec2430353611'; 
+    console.log(zeroBlock);
+    
+    var zeroBlock = document.querySelector(zeroBlockId);
+    console.log(zeroBlock);
+
+    var standardProducts = document.querySelectorAll('.js-product');
+    
+    if (!zeroBlock || standardProducts.length === 0) return;
+    
+    var zeroContainer = zeroBlock.querySelector('.t396__artboard');
+    var originalCard = zeroBlock.querySelector('.my-product-card'); // Наш шаблон для клонирования
+    
+    if (!originalCard) return;
+
+    // Создаем специальный контейнер-сетку внутри Zero Block
+    var gridContainer = document.createElement('div');
+    gridContainer.className = 'my-products-grid';
+    zeroContainer.appendChild(gridContainer);
+    
+    // Прячем исходную карточку-шаблон, чтобы она не дублировалась
+    originalCard.style.display = 'none';
+    
+    // Перебираем товары из скрытого каталога (например, ST310N или ST200)
+    standardProducts.forEach(function(product) {
+        var title = product.querySelector('.js-store-prod-title')?.innerText || '';
+        // var text = product.querySelector('.js-store-prod-text')?.innerText || '';
+        // var price = product.querySelector('.js-store-prod-price')?.innerText || '';
+        // var imgUrl = product.querySelector('.js-store-prod-img')?.getAttribute('data-original') || '';
+        // var prodId = product.getAttribute('data-product-id');
+
+        // КЛОНИРОВАНИЕ: Создаем глубокую копию группы из Zero Block
+        var clonedCard = originalCard.cloneNode(true);
+        clonedCard.style.display = 'flex'; // Делаем клон видимым внутри CSS Grid
+
+        // Наполняем клон данными из каталога
+        var cTitle = clonedCard.querySelector('.js-custom-title');
+        if (cTitle) cTitle.innerText = title;
+
+        // var cText = clonedCard.querySelector('.js-custom-text');
+        // if (cText) cText.innerText = text;
+
+        // var cPrice = clonedCard.querySelector('.js-custom-price');
+        // if (cPrice) cPrice.innerText = price;
+
+        // var cImg = clonedCard.querySelector('.js-custom-img img');
+        // if (cImg && imgUrl) cImg.src = imgUrl;
+
+        // // Связываем кнопку клона с корзиной для правильного ID товара
+        // var cBtn = clonedCard.querySelector('.js-custom-btn a') || clonedCard.querySelector('.js-custom-btn');
+        // if (cBtn) {
+        //     cBtn.setAttribute('href', '#order:#!/tproduct/' + prodId);
+        // }
+
+        // // Очищаем фиксированные координаты элементов Tilda внутри клона
+        // clonedCard.querySelectorAll('.t396__elem').forEach(function(el) {
+        //     el.style.left = 'auto';
+        //     el.style.top = 'auto';
+        // });
+
+        // Помещаем готовый клон в CSS-сетку
+        gridContainer.appendChild(clonedCard);
+    });
+
+    // Делаем высоту самого Zero Block автоматической, подстраиваясь под количество товаров
+    // zeroContainer.style.height = 'auto';
+    // zeroContainer.style.overflow = 'hidden';
+    // gridContainer.style.position = 'relative';
+    // zeroBlock.querySelector('.t396__carrier').style.height = 'auto';
+});
+</script>
