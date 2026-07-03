@@ -1,0 +1,134 @@
+<style>
+  #rec2440234011 {
+    display: none !important;
+  }
+  .my-slider-sert {
+    width: 100%;
+    overflow: auto;
+    z-index: 5;
+  }
+  .my-slider-sert-track {
+    display: flex;
+    gap: 30px;
+    width: fit-content;
+  }
+  .sert_slider_item {
+    width: 363px;
+    max-height: 516px;
+    overflow: hidden;
+    border-radius: 20px;
+  }
+  .sert_slider_img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+</style>
+<script>
+    
+  function showSertifficat() {
+    // 1. УКАЖИТЕ ID ВАШЕГО ZERO BLOCK И БЛОКА ПОТОКОВ
+    var zeroBlockId = '#rec2440338951'; 
+    var hiddenSertifficatBlockId = '#rec2440234011';
+    
+    var zeroBlock = document.querySelector(zeroBlockId);
+    var hiddenBlock = document.querySelector(hiddenSertifficatBlockId);
+
+    // console.log(zeroBlock);
+    // console.log('///');
+    // console.log(hiddenBlock);
+    
+    if (!zeroBlock || !hiddenBlock) return;
+    
+    var standardSert = hiddenBlock.querySelectorAll('.t214__blockimg.t-bgimg');
+    if (standardSert.length === 0) return;
+    
+    var zeroContainer = zeroBlock.querySelector('.t396__artboard');
+    // var originalCard = zeroBlock.querySelector('.my-news-card');
+    
+    // if (!originalCard) return;
+
+    // Создаем структуру слайдера
+    var sliderWindow = document.createElement('div');
+    sliderWindow.className = 'my-slider-sert';
+    
+    var sliderTrack = document.createElement('div');
+    sliderTrack.className = 'my-slider-sert-track';
+    
+    sliderWindow.appendChild(sliderTrack);
+    zeroContainer.appendChild(sliderWindow);
+
+    
+    // Прячем исходный шаблон
+    // originalCard.style.display = 'none';
+    
+    standardSert.forEach(function(img) {
+      
+      var imgUrlOriginal = img?.getAttribute('data-original') || '';
+      var imgUrl = img?.style.backgroundImage || '';
+      // var newsLink = post.querySelector('a')?.getAttribute('href') || '#';
+
+      // var clonedCard = originalCard.cloneNode(true);
+      // clonedCard.style.display = 'flex'; 
+
+      // Заполняем клон данными
+
+      // var cImg = clonedCard.querySelector('.js-custom-news-img .tn-atom');
+      var sliderSertItemDiv = document.createElement('div');
+      sliderSertItemDiv.classList.add('sert_slider_item');
+      var sliderSertItemImg = document.createElement('img');
+      sliderSertItemImg.classList.add('sert_slider_img');
+
+      if (sliderSertItemImg && imgUrl) {
+        sliderSertItemImg.setAttribute('src', imgUrlOriginal);
+      }
+      
+      // clonedCard.querySelectorAll('.t396__elem').forEach(function(el) {
+      //     el.style.left = 'auto';
+      //     el.style.top = 'auto';
+      // });
+      // sliderTrack.appendChild(clonedCard);
+      // zeroContainer.appendChild(clonedCard);
+      // zeroContainer.appendChild(sliderSertItemImg);
+      sliderSertItemDiv.appendChild(sliderSertItemImg);
+      sliderTrack.appendChild(sliderSertItemDiv);
+    });
+    sliderTrack.appendChild(sliderTrack);
+    // // --- ЛОГИКА ДЛЯ РАБОТЫ СТРЕЛОК ---
+    // var btnPrev = zeroBlock.querySelector('.js-slider-prev');
+    // var btnNext = zeroBlock.querySelector('.js-slider-next');
+    
+    // // Шаг прокрутки: ширина карточки (320px) + расстояние gap (30px) = 350px
+    // var scrollStep = 450; 
+
+    // if (btnNext) {
+    //   btnNext.addEventListener('click', function() {
+    //     sliderWindow.scrollLeft += scrollStep;
+    //   });
+    // }
+
+    // if (btnPrev) {
+    //   btnPrev.addEventListener('click', function() {
+    //     sliderWindow.scrollLeft -= scrollStep;
+    //   });
+    // }
+
+    // Регулируем высоту под карточку + запас на дизайн
+    var cardHeight = originalCard.offsetHeight || 450; 
+    var totalHeight = cardHeight + 160; // Запас увеличен, чтобы вместились ваши стрелки внизу
+    
+    zeroContainer.style.height = totalHeight + 'px';
+    zeroContainer.style.overflow = 'hidden';
+    zeroBlock.querySelector('.t396__carrier').style.height = totalHeight + 'px';
+    observerSert.disconnect();
+  };
+
+  var observerSert = new MutationObserver(function(mutations) {showSertifficat();});
+
+  document.addEventListener("DOMContentLoaded", function() {
+    var targetBlockSert = document.querySelector('#rec2440234011');
+    if (targetBlockSert) observerSert.observe(targetBlockSert, {childList: true, subtree: true});
+    showSertifficat();
+  });
+
+</script>

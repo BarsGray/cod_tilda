@@ -50,14 +50,14 @@ function startCloning() {
     zeroContainer.style.height = 'auto';
     gridContainer.style.position = 'relative';
     zeroBlock.querySelector('.t396__carrier').style.height = 'auto';
-    observer.disconnect();
+    observerProd.disconnect();
 }
 
-var observer = new MutationObserver(function(mutations) { startCloning(); });
+var observerProd = new MutationObserver(function(mutations) { startCloning(); });
 
 document.addEventListener("DOMContentLoaded", function() {
     var targetBlock = document.querySelector('#rec2430353611');
-    if (targetBlock) observer.observe(targetBlock, { childList: true, subtree: true });
+    if (targetBlock) observerProd.observe(targetBlock, { childList: true, subtree: true });
     startCloning();
 });
 </script>
