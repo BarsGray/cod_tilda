@@ -65,17 +65,12 @@
 #rec2440338951 .tn-elem[data-elem-id="1783406997164000003"].chevron_prev,
 #rec2436517091 .tn-elem[data-elem-id="1783002779863000004"].chevron_prev_white,
 #rec2436517091 .tn-elem[data-elem-id="1783002779864000008"].chevron_next_white,
-#rec2430182651 .tn-elem[data-elem-id="1782804197123000002"].chevron_prev_white,
-#rec2430182651 .tn-elem[data-elem-id="1782804121030000001"].chevron_next_white {
+/* #rec2430182651 .tn-elem[data-elem-id="1782804197123000002"].chevron_prev_white,
+#rec2430182651 .tn-elem[data-elem-id="1782804121030000001"].chevron_next_white { */
+#rec2449991841 .tn-elem[data-elem-id="1782804197123000002"].chevron_prev_white,
+#rec2449991841 .tn-elem[data-elem-id="1782804121030000001"].chevron_next_white {
   z-index: 5;
 }
-
-/* .js-slider-prev:active .btn_prev .tn-atom,
-.js-slider-next:active .btn_next .tn-atom,
-#molecule-1782397520137000012:active .btn_prev .tn-atom,
-#molecule-1782397561317000013:active .btn_next .tn-atom {
-  background-color: #212f79;
-} */
 
 .js-slider-prev:hover .sert_btn_prev .tn-atom,
 .js-slider-next:hover .sert_btn_next .tn-atom {

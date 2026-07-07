@@ -28,6 +28,18 @@
     height: 100%;
     object-fit: cover;
   }
+  .swiper {
+    padding-bottom: 80px;
+  }
+  .slider__pagination {
+    --swiper-pagination-bottom: 0;
+  }
+  .swiper-pagination-bullet {
+    --swiper-pagination-bullet-horizontal-gap: 10px;
+    --swiper-pagination-color: #f2f2f2;
+    width: 15px;
+    height: 15px;
+  }
 </style>
 <script>
     
@@ -59,6 +71,9 @@
     
     var sliderTrack = document.createElement('div');
     sliderTrack.className = 'my-slider-sert-track swiper-wrapper';
+
+    var sliderPagination = document.createElement('div');
+    sliderPagination.className = 'swiper-pagination slider__pagination';
     
     sliderWindow.appendChild(sliderTrack);
     zeroContainer.appendChild(sliderWindow);
@@ -98,6 +113,8 @@
       sliderSertItemDiv.appendChild(sliderSertItemImg);
       sliderTrack.appendChild(sliderSertItemDiv);
     });
+    sliderWindow.appendChild(sliderPagination);
+
     // sliderTrack.appendChild(sliderTrack);
     // // --- ЛОГИКА ДЛЯ РАБОТЫ СТРЕЛОК ---
     // var btnPrev = zeroBlock.querySelector('.js-slider-prev');
@@ -135,10 +152,10 @@
         nextEl: "#rec2440338951 .js-slider-next",
         prevEl: "#rec2440338951 .js-slider-prev",
       },
-      // pagination: {
-      //   el: ".foto_slider__pagination",
-      //   clickable: true,
-      // },
+      pagination: {
+        el: ".slider__pagination",
+        clickable: true,
+      },
       // breakpoints: {
       //   890: {
       //     centeredSlides: true,
