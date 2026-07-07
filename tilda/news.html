@@ -147,16 +147,31 @@ function showNews() {
     var btnNext = zeroBlock.querySelector('.js-slider-next');
     
     // Шаг прокрутки: ширина карточки (320px) + расстояние gap (30px) = 350px
-    var scrollStep = 450; 
+    var scrollStep = 450;
+    var maxScrollNews = sliderWindow.scrollWidth - sliderWindow.clientWidth;
+    console.log(maxScrollNews + ' maxScrollNews');
+
 
     if (btnNext) {
         btnNext.addEventListener('click', function() {
+            if (sliderWindow.scrollLeft + scrollStep >= maxScrollNews) {
+                btnNext.classList.add('disabled');
+            } else {
+                btnNext.classList.remove('disabled');
+                btnPrev.classList.remove('disabled');
+            }
             sliderWindow.scrollLeft += scrollStep;
         });
     }
 
     if (btnPrev) {
         btnPrev.addEventListener('click', function() {
+            if (sliderWindow.scrollLeft - scrollStep <= 0) {
+                btnPrev.classList.add('disabled');
+            } else {
+                btnNext.classList.remove('disabled');
+                btnPrev.classList.remove('disabled');
+            }
             sliderWindow.scrollLeft -= scrollStep;
         });
     }
