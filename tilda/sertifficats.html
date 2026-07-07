@@ -1,8 +1,13 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css"/>
+<script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
 <style>
   #rec2440234011 {
     display: none !important;
   }
-  .my-slider-sert {
+  #rec2440338951 .t396__artboard {
+    height: fit-content;
+  }
+  /* .my-slider-sert {
     width: 100%;
     overflow: auto;
     z-index: 5;
@@ -11,7 +16,7 @@
     display: flex;
     gap: 30px;
     width: fit-content;
-  }
+  } */
   .sert_slider_item {
     width: 363px;
     max-height: 516px;
@@ -50,10 +55,10 @@
 
     // Создаем структуру слайдера
     var sliderWindow = document.createElement('div');
-    sliderWindow.className = 'my-slider-sert';
+    sliderWindow.className = 'my-slider-sert swiper';
     
     var sliderTrack = document.createElement('div');
-    sliderTrack.className = 'my-slider-sert-track';
+    sliderTrack.className = 'my-slider-sert-track swiper-wrapper';
     
     sliderWindow.appendChild(sliderTrack);
     zeroContainer.appendChild(sliderWindow);
@@ -75,7 +80,7 @@
 
       // var cImg = clonedCard.querySelector('.js-custom-news-img .tn-atom');
       var sliderSertItemDiv = document.createElement('div');
-      sliderSertItemDiv.classList.add('sert_slider_item');
+      sliderSertItemDiv.className = 'sert_slider_item swiper-slide';
       var sliderSertItemImg = document.createElement('img');
       sliderSertItemImg.classList.add('sert_slider_img');
 
@@ -93,7 +98,7 @@
       sliderSertItemDiv.appendChild(sliderSertItemImg);
       sliderTrack.appendChild(sliderSertItemDiv);
     });
-    sliderTrack.appendChild(sliderTrack);
+    // sliderTrack.appendChild(sliderTrack);
     // // --- ЛОГИКА ДЛЯ РАБОТЫ СТРЕЛОК ---
     // var btnPrev = zeroBlock.querySelector('.js-slider-prev');
     // var btnNext = zeroBlock.querySelector('.js-slider-next');
@@ -114,13 +119,32 @@
     // }
 
     // Регулируем высоту под карточку + запас на дизайн
-    var cardHeight = originalCard.offsetHeight || 450; 
-    var totalHeight = cardHeight + 160; // Запас увеличен, чтобы вместились ваши стрелки внизу
+    // var cardHeight = originalCard.offsetHeight || 450; 
+    // var totalHeight = cardHeight + 160; // Запас увеличен, чтобы вместились ваши стрелки внизу
     
-    zeroContainer.style.height = totalHeight + 'px';
-    zeroContainer.style.overflow = 'hidden';
-    zeroBlock.querySelector('.t396__carrier').style.height = totalHeight + 'px';
+    // zeroContainer.style.height = totalHeight + 'px';
+    // zeroContainer.style.overflow = 'hidden';
+    // zeroBlock.querySelector('.t396__carrier').style.height = totalHeight + 'px';
     observerSert.disconnect();
+
+    new Swiper('.my-slider-sert', {
+      slidesPerView: 4,
+      slidesPerGroup: 4,
+      spaceBetween: 30,
+      navigation: {
+        nextEl: "#rec2440338951 .js-slider-next",
+        prevEl: "#rec2440338951 .js-slider-prev",
+      },
+      // pagination: {
+      //   el: ".foto_slider__pagination",
+      //   clickable: true,
+      // },
+      // breakpoints: {
+      //   890: {
+      //     centeredSlides: true,
+      //   },
+      // },
+    });
   };
 
   var observerSert = new MutationObserver(function(mutations) {showSertifficat();});
@@ -130,5 +154,6 @@
     if (targetBlockSert) observerSert.observe(targetBlockSert, {childList: true, subtree: true});
     showSertifficat();
   });
+
 
 </script>
