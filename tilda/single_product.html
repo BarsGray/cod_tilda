@@ -1,34 +1,47 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
 <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
 <style>
-  #rec2473123931 {
-    /* display: none !important; */
-  }
+  #rec2473123931 {display: none !important;}
+  .myNewsThumbsSwiper,.myNewsMainSwiper {max-width: 780px;}
+  .myNewsMainSwiper {margin: 0;}
+  .myNewsThumbsSwiper {max-width: 1575px;height: 240px;width: 100%;}
+  .myNewsThumbsSwiper .swiper-slide {max-width: 361px;max-height: 238px;border: 1px solid #212F79;}
+  .myNewsThumbsSwiper img {width: 100%;height: 100%;}
+  .myNewsThumbsSwiper .swiper-slide {transition: all .2s ease-in-out; cursor: pointer;}
+  .myNewsThumbsSwiper .swiper-slide-thumb-active {opacity: 0.7;}
+  .watermark {bottom: 15px; top: auto !important;}
 
-  .myNewsThumbsSwiper,
-  .myNewsMainSwiper {
-    max-width: 780px;
+  form {
+    background-color: #fff;
+    padding: 60px;
   }
-
-  .myNewsMainSwiper {
-    margin: 0;
+  form .t-input-group {
+    margin-bottom: 30px !important;
   }
-
-  .myNewsThumbsSwiper {
-    max-width: 1575px;
-    height: 240px;
-    width: 100%;
+  input::placeholder {
+    color: #212F79 !important;
+    font-size: 20px !important;
+    opacity: 1 !important;
   }
-
-  .myNewsThumbsSwiper .swiper-slide {
-    max-width: 361px;
-    max-height: 238px;
-    border: 1px solid #212F79;
+  input {
+    color: #212F79 !important;
+    font-size: 20px !important;
+    padding: 0 !important;
+    border: none !important;
+    border-bottom: 1px solid #212F79 !important;
+    height: 32px !important;
   }
-
-  .myNewsThumbsSwiper img {
-    width: 100%;
-    height: 100%;
+  button[type="submit"] {
+    height:  44px !important;
+    border: 1px solid #212F79 !important;
+    background-color: #fff !important;
+    font-size: 24px !important;
+    color: #212F79 !important;
+    transition: all .3s ease-in-out !important;
+  }
+  button[type="submit"]:hover {
+    background-color: #212F79 !important;
+    color: #fff !important;
   }
 </style>
 <script>
@@ -41,9 +54,8 @@
     var singleProdGalleryImg = hiddenBlock.querySelectorAll('.tn-atom__slds-img');
     var sliderTrackMain = zeroBlock.querySelector('.myNewsMainSwiper .swiper-news-gallery-target');
     var sliderTrackThumbs = zeroBlock.querySelector('.myNewsThumbsSwiper .swiper-news-gallery-target');
+    let urlSlides = [];
 
-    // Прячем исходный шаблон
-    // originalCard.style.display = 'none';
     // sliderTrackMain.innerHTML = '';
     // sliderTrackThumbs.innerHTML = '';
 
@@ -56,17 +68,14 @@
       return swiperSlide;
     }
     if (singleProdImg) {
-      let newSingleSlide = ;
       sliderTrackMain.appendChild(createSlide(singleProdImg));
       sliderTrackThumbs.appendChild(createSlide(singleProdImg).cloneNode(true));
     }
     if (singleProdGalleryImg.length !== 0) {
-      // let countSlides = 0;
       singleProdGalleryImg.forEach(function (imgGallery) {
-        // if(countSlides === 0 || countSlides === singleProdGalleryImg.length - 1) {
-        //   countSlides++;
-        //   return;
-        // }
+        let url = imgGallery.getAttribute('data-original');
+        if (urlSlides.includes(url)) return;
+        urlSlides.push(url);
         sliderTrackMain.appendChild(createSlide(imgGallery));
         sliderTrackThumbs.appendChild(createSlide(imgGallery).cloneNode(true));
       });
@@ -84,7 +93,7 @@
     });
     // 2. Инициализируем главный слайдер и связываем его с нижним через параметр thumbs
     var galleryMain = new Swiper(".myNewsMainSwiper", {
-      // loop: true,
+      loop: true,
       spaceBetween: 10,
       navigation: {
         nextEl: ".swiper-button-next",
@@ -105,5 +114,4 @@
     if (targetBlock) observerSingleProd.observe(targetBlock, { childList: true, subtree: true });
     showSingleProd();
   });
-
 </script>

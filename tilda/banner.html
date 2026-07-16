@@ -1,48 +1,30 @@
 <script>
   window.addEventListener('load', () => {
-    let bunner_btn_prev      = document.querySelector('#molecule-1782397520137000012');
-    let bunner_btn_next      = document.querySelector('#molecule-1782397561317000013');
+    let bunner_btn_prev      = document.querySelector('#molecule-1783521354765000053');
+    let bunner_btn_next      = document.querySelector('#molecule-1783521354765000057');
     let bunner_list          = document.querySelectorAll('.bunner_list .tn-atom');
     let bunner_img           = document.querySelectorAll('.bunner_img img.tn-atom__img');
     let bunner_active_color  = '#212f79';
     let bunner_defoult_color = '#8b9fb3';
     let bunner_list_count    = 0;
     let isClicked            = false;
-    let anim                 = document.querySelector('#sbs-2449991841-1782484740537000004');
+    let anim                 = document.querySelector('#sbs-2449991841-1783521354764000034');
     const DALEY              = 500;
 
     function change_color_bunner_list() {
-      bunner_list.forEach(e => {
-        e.style.color = bunner_defoult_color;
-      });
-    }
+      bunner_list.forEach(e => {e.style.color = bunner_defoult_color;});}
     
     function change_img_bunner() {
-      bunner_img.forEach(e => {
-        e.style.opacity = 0;
-        e.style.right = 0;
-      });
-    }
+      bunner_img.forEach(e => {e.style.opacity = 0;e.style.right = 0;});}
     
     function set_active_color() {
       change_color_bunner_list();
       bunner_list[bunner_list_count].style.color = bunner_active_color;
       bunner_list[bunner_list_count].style.opacity = 1;
-      setTimeout(() => {
-        change_img_bunner();
-        bunner_img[bunner_list_count].style.opacity = 1;
-      }, DALEY);
-      setTimeout(() => {
-        anim.style.animation = 'none';
-        isClicked = false;
-      }, DALEY * 2);
-    }
+      setTimeout(() => {change_img_bunner();bunner_img[bunner_list_count].style.opacity = 1;}, DALEY);
+      setTimeout(() => {anim.style.animation = 'none';isClicked = false;}, DALEY * 2);}
 
-    function aminationTimeout() {
-      set_active_color();
-      isClicked = true;
-      anim.style.animation = 'sbs-2449991841-1782484740537000004 1s linear forwards';
-    }
+    function aminationTimeout() {set_active_color();isClicked = true;anim.style.animation = 'sbs-2449991841-1783521354764000034 1s linear forwards';}
 
     function movePrevSlide() {
       if (isClicked) return;
@@ -70,8 +52,7 @@
   });
 </script>
 
-<script>
-
+<!-- <script>
 document.addEventListener("DOMContentLoaded", function() {
     // ЗАМЕНИТЕ НА ID ВАШЕГО ZERO BLOCK
     var zeroBlockId = '#rec123456789'; 
@@ -96,4 +77,4 @@ document.addEventListener("DOMContentLoaded", function() {
         // и динамически меняем текст, фото и ссылки для корзины ST100
     });
 });
-</script>
+</script> -->

@@ -1,117 +1,64 @@
 <style>
 #rec2436501631 { display: none !important; }
-/* ОБЕРТКА-ОКНО ДЛЯ СЛАЙДЕРА */
 .my-slider-window {
-    /* position: absolute;
-    top: 50px;
-    left: 50%; */
     width: 100% !important;
     overflow-x: auto;
     overflow-y: hidden;
     scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch; /* Плавный скролл на iPhone */
-    padding: 44px 0 0;
+    -webkit-overflow-scrolling: touch;
     box-sizing: border-box;
     max-width: 1605px;
     margin: 0 auto;
 }
-
-/* Скрываем стандартные полосы прокрутки (скроллбары) в браузерах */
-.my-slider-window::-webkit-scrollbar {
-    display: none;
-}
-.my-slider-window {
-    -ms-overflow-style: none;  
-    scrollbar-width: none;  
-}
-
-/* ЛЕНТА СЛАЙДЕРА, ГДЕ ЛЕЖАТ ВСЕ КАРТОЧКИ В РЯД */
-.my-slider-track {
-    display: flex !important;
-    flex-direction: row !important;
-    flex-wrap: nowrap !important;
-    width: max-content !important; /* Авто-ширина под все карточки */
-    gap: 40px !important;          /* Расстояние между новостями */
-}
-
-/* ОДИНОЧНАЯ КАРТОЧКА НОВОСТИ ВНУТРИ СЛАЙДЕРА */
+.my-slider-window::-webkit-scrollbar {display: none;}
+.my-slider-window {-ms-overflow-style: none;scrollbar-width: none;  }
+.my-slider-track {display: flex !important;flex-direction: row !important;flex-wrap: nowrap !important;width: max-content !important;gap: 40px !important;}
 .my-news-card {
     position: relative !important;
     top: auto !important;
     left: auto !important;
     display: flex;
     flex-direction: column !important;
-    flex-shrink: 0 !important;     /* Запрещаем карточкам сжиматься */
-    width: 504px !important;       /*  ЖЕСТКАЯ ШИРИНА ОДНОЙ КАРТОЧКИ СЛАЙДЕРА */
+    flex-shrink: 0 !important;
 }
-
-.my-news-card .t396__elem {
-    position: relative !important;
-}
-
-/* Делаем стрелки кликабельными курсором-рукой */
-.js-slider-prev, .js-slider-next {
-    cursor: pointer !important;
-}
-.news_title_box {
-  display: block;
-  max-width: 1605px;
-  margin: 0 auto;
-}
-#rec2436517091 .tn-group[data-group-id="1783000031783000006"].news_title_box {
-  width: 100%;
-  position: static;
-}
-.more_link:hover {
-  text-decoration: underline;
-}
+.my-news-card .t396__elem {position: relative !important;}
+.js-slider-prev, .js-slider-next {cursor: pointer !important;}
+.news_title_box {display: block;max-width: 1605px;margin: 0 auto;}
+#rec2436517091 .tn-group[data-group-id="1783000031783000006"].news_title_box {width: 100%;position: static;}
+.more_link:hover {text-decoration: underline;}
+@media (max-width: 1210px) {.my-slider-track {gap: 20px !important;}}
 </style>
 
 <script>
 function showNews() {
-    // 1. УКАЖИТЕ ID ВАШЕГО ZERO BLOCK И БЛОКА ПОТОКОВ
-    var zeroBlockId = '#rec2436517091'; 
+    var zeroBlockId = '#rec2436517091';
     var hiddenNewsBlockId = '#rec2436501631';
-    
     var zeroBlock = document.querySelector(zeroBlockId);
     var hiddenBlock = document.querySelector(hiddenNewsBlockId);
-
-    // console.log(zeroBlock);
-    // console.log('///');
-    // console.log(hiddenBlock);
-    
     if (!zeroBlock || !hiddenBlock) return;
-    
     var standardNews = hiddenBlock.querySelectorAll('.js-feed-post');
     if (standardNews.length === 0) return;
-    
     var zeroContainer = zeroBlock.querySelector('.t396__artboard');
     var originalCard = zeroBlock.querySelector('.my-news-card');
-    
     if (!originalCard) return;
 
     // Создаем структуру слайдера
     var sliderWindow = document.createElement('div');
     sliderWindow.className = 'my-slider-window';
-    
     var sliderTrack = document.createElement('div');
     sliderTrack.className = 'my-slider-track';
-    
     sliderWindow.appendChild(sliderTrack);
     zeroContainer.appendChild(sliderWindow);
-    
     // Прячем исходный шаблон
     originalCard.style.display = 'none';
     
     standardNews.forEach(function(post) {
         var title = post.querySelector('.js-feed-post-title')?.innerText || '';
         var text = post.querySelector('.js-feed-post-descr')?.innerText || '';
-        // var date = post.querySelector('.js-feed-post-date')?.innerText || '';
         var img = post.querySelector('.t-feed__post-bgimg');
         var imgUrlOriginal = img?.getAttribute('data-original') || '';
         var imgUrl = img?.style.backgroundImage || '';
-        // var newsLink = post.querySelector('a')?.getAttribute('href') || '#';
-
+        var newsLink = post.querySelector('a')?.getAttribute('href') || '#';
         var clonedCard = originalCard.cloneNode(true);
         clonedCard.style.display = 'flex'; 
 
@@ -120,8 +67,6 @@ function showNews() {
         if (cTitle) cTitle.innerText = title;
         var cText = clonedCard.querySelector('.js-custom-news-description .tn-atom');
         if (cText) cText.innerText = text;
-        // var cDate = clonedCard.querySelector('.js-custom-date') || clonedCard.querySelector('.js-news-date');
-        // if (cDate) cDate.innerText = date;
         var cImg = clonedCard.querySelector('.js-custom-news-img .tn-atom');
         if (cImg && imgUrl) {
             cImg.setAttribute('data-original', imgUrlOriginal);
@@ -129,28 +74,18 @@ function showNews() {
             cImg.style.backgroundSize = 'cover';
             cImg.style.backgroundPosition = 'center';
         }
-        // var cBtn = clonedCard.querySelector('.js-custom-btn a') || clonedCard.querySelector('.js-news-btn a') || clonedCard.querySelector('.js-news-btn');
-        // if (cBtn && newsLink !== '#') {
-        //     cBtn.setAttribute('href', newsLink);
-        //     cBtn.removeAttribute('data-elem-id'); 
-        // }
+        clonedCard.setAttribute('href', newsLink);
         clonedCard.querySelectorAll('.t396__elem').forEach(function(el) {
             el.style.left = 'auto';
             el.style.top = 'auto';
         });
         sliderTrack.appendChild(clonedCard);
-        // zeroContainer.appendChild(clonedCard);
     });
 
-    // --- ЛОГИКА ДЛЯ РАБОТЫ СТРЕЛОК ---
     var btnPrev = zeroBlock.querySelector('.js-slider-prev');
     var btnNext = zeroBlock.querySelector('.js-slider-next');
-    
-    // Шаг прокрутки: ширина карточки (320px) + расстояние gap (30px) = 350px
     var scrollStep = 450;
     var maxScrollNews = sliderWindow.scrollWidth - sliderWindow.clientWidth;
-    console.log(maxScrollNews + ' maxScrollNews');
-
 
     if (btnNext) {
         btnNext.addEventListener('click', function() {
@@ -176,22 +111,17 @@ function showNews() {
         });
     }
 
-    // Регулируем высоту под карточку + запас на дизайн
     var cardHeight = originalCard.offsetHeight || 450; 
-    var totalHeight = cardHeight + 160; // Запас увеличен, чтобы вместились ваши стрелки внизу
-    
+    var totalHeight = cardHeight + 160;
     zeroContainer.style.height = totalHeight + 'px';
     zeroContainer.style.overflow = 'hidden';
     zeroBlock.querySelector('.t396__carrier').style.height = totalHeight + 'px';
     observerNews.disconnect();
 };
-
 var observerNews = new MutationObserver(function(mutations) { showNews(); });
-
 document.addEventListener("DOMContentLoaded", function() {
-    var targetBlock = document.querySelector('#rec2430353611');
+    var targetBlock = document.querySelector('#rec2436501631');
     if (targetBlock) observerNews.observe(targetBlock, { childList: true, subtree: true });
     showNews();
 });
-
 </script>

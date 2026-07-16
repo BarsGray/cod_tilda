@@ -1,13 +1,12 @@
-<style>#rec2430353611 { display: none !important; }</style>
+<style>#rec2470160591 { display: none !important; }</style>
 <script>
 function startCloning() {
-    var zeroBlockId = '#rec2432125021';
+    var zeroBlockId = '#rec2470083011';
     var zeroBlock = document.querySelector(zeroBlockId);
-    var standardProducts = document.querySelector('#rec2430353611');
+    var standardProducts = document.querySelector('#rec2470160591');
 
     if (!zeroBlock || !standardProducts) return;
-    var standardProd = standardProducts.querySelectorAll('.js-product.t-store__card');
-        
+    var standardProd = standardProducts.querySelectorAll('.js-feed-post');
     if (standardProd.length < 2) return; 
     
     if (zeroBlock.classList.contains('js-already-cloned')) return;
@@ -16,17 +15,17 @@ function startCloning() {
     var zeroContainer = zeroBlock.querySelector('.t396__artboard');
     var gridContainer = zeroBlock.querySelector('.t396__artboard .glav_catalog_container');
     var originalCard = zeroBlock.querySelector('.my-product-card');
-    console.log(originalCard);
+
     if (!originalCard) return;
     originalCard.style.display = 'none';
     
     standardProd.forEach(function(product) {
-        var titleElement = product.querySelector('.js-store-prod-name') || product.querySelector('.js-store-prod-title');
+        var titleElement = product.querySelector('.js-feed-post-title');
         var title = titleElement ? titleElement.innerText : '';
-        var textElement = product.querySelector('.js-store-prod-descr.t-store__card__descr');
+        var textElement = product.querySelector('.js-feed-post-descr');
         var text = textElement ? textElement.innerText : '';
-        var realProductLink = product.querySelector('a[href*="/tproduct/"]')?.getAttribute('href') || '#';
-        var imgUrl = product.querySelector('.js-product-img.t-store__card__bgimg')?.getAttribute('data-original') || '';
+        var realProductLink = product.querySelector('a')?.getAttribute('href') || '#';
+        var imgUrl = product.querySelector('.t-feed__post-bgimg')?.getAttribute('data-original') || '';
         
         var clonedCard = originalCard.cloneNode(true);
         clonedCard.style.display = 'block'; 
@@ -57,7 +56,7 @@ function startCloning() {
 var observerProd = new MutationObserver(function(mutations) { startCloning(); });
 
 document.addEventListener("DOMContentLoaded", function() {
-    var targetBlock = document.querySelector('#rec2430353611');
+    var targetBlock = document.querySelector('#rec2470160591');
     if (targetBlock) observerProd.observe(targetBlock, { childList: true, subtree: true });
     startCloning();
 });
