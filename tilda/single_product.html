@@ -2,15 +2,25 @@
 <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
 <style>
   #rec2473123931 {display: none !important;}
-  .myNewsThumbsSwiper,.myNewsMainSwiper {max-width: 780px;}
+  .myNewsMainSwiper {max-width: 780px;}
   .myNewsMainSwiper {margin: 0;}
-  .myNewsThumbsSwiper {max-width: 1575px;height: 240px;width: 100%;}
-  .myNewsThumbsSwiper .swiper-slide {max-width: 361px;max-height: 238px;border: 1px solid #212F79;}
-  .myNewsThumbsSwiper img {width: 100%;height: 100%;}
+  .myNewsThumbsSwiper {max-width: 1575px;max-height: 240px;width: 100%;}
+  .myNewsThumbsSwiper .swiper-slide {max-width: 361px;}
+  .myNewsThumbsSwiper img {width: 100%;height: 100%;object-fit: cover;}
   .myNewsThumbsSwiper .swiper-slide {transition: all .2s ease-in-out; cursor: pointer;}
   .myNewsThumbsSwiper .swiper-slide-thumb-active {opacity: 0.7;}
   .watermark {bottom: 15px; top: auto !important;}
-
+  .thumbs_swiper_box * {box-sizing: border-box;}
+  .thumbs_swiper_box {width: calc(100% - 1px) !important;}
+  .thumb_box .swiper {margin: 0;}
+  .thumb_box,.thumb_box>.tn-atom__html {display: block !important;}
+  .myNewsMainSwiper img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    margin: 0 auto;
+    display: block;
+  }
   form {
     background-color: #fff;
     padding: 60px;
@@ -43,6 +53,87 @@
     background-color: #212F79 !important;
     color: #fff !important;
   }
+  .myNewsThumbsSwiper .slide_wrap {
+    width: 100%;
+    height: 100%;
+    max-height: 240px;
+    border: 1px solid #212F79;
+  }
+
+  @media (max-width: 1500px) {
+    form {
+      padding: 40px;
+    }
+    .myNewsThumbsSwiper .swiper-slide {
+      /* max-height: 180px; */
+    }
+    .prod_sin_right_box {
+      height: fit-content !important;
+    }
+    .myNewsMainSwiper {
+      max-width: 690px;
+      max-height: 470px;
+    }
+    .myNewsMainSwiper img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      margin: 0 auto;
+      display: block;
+    }
+  }
+  @media (max-width: 1210px) {
+    .myNewsMainSwiper {
+      max-width: 970px;
+      max-height: unset;
+    }
+    .myNewsThumbsSwiper {
+      max-height: 170px;
+    }
+  }
+  @media (max-width: 1000px) {
+    .myNewsMainSwiper {
+      max-width: 870px;
+    }
+    form {
+      padding: 20px;
+    }
+    input {
+      font-size: 16px !important;
+    }
+    input::placeholder {
+      font-size: 16px !important;
+    }
+    form .t-input-group {
+      margin-bottom: 20px !important;
+    }
+    button[type="submit"] {
+      height: 34px !important;
+      font-size: 18px !important;
+      width: fit-content !important;
+    }
+    /* .myNewsThumbsSwiper {
+      height: fit-content;
+    } */
+    .myNewsThumbsSwiper .slide_wrap {
+      max-height: 138px;
+    }
+  }
+  @media (max-width: 900px) {
+    .myNewsMainSwiper {
+      max-width: 670px;
+    }
+  }
+  @media (max-width: 700px) {
+    .myNewsMainSwiper {
+      max-width: 470px;
+    }
+  }
+  @media (max-width: 500px) {
+    .myNewsMainSwiper {
+      max-width: 350px;
+    }
+  }
 </style>
 <script>
   function showSingleProd() {
@@ -62,9 +153,12 @@
     function createSlide(img) {
       let swiperSlide = document.createElement('div');
       swiperSlide.classList.add('swiper-slide');
+      let swiperSlideWrap = document.createElement('div');
+      swiperSlideWrap.classList.add('slide_wrap');
       let slideImgElem = document.createElement('img');
       slideImgElem.src = img.getAttribute('data-original');
-      swiperSlide.appendChild(slideImgElem);
+      swiperSlideWrap.appendChild(slideImgElem);
+      swiperSlide.appendChild(swiperSlideWrap);
       return swiperSlide;
     }
     if (singleProdImg) {
@@ -90,6 +184,11 @@
       slidesPerView: 4,           /* Сколько миниатюр видно одновременно */
       freeMode: true,             /* Разрешаем свободное перетаскивание ленты */
       watchSlidesProgress: true,  /* Следить за активными слайдами */
+      breakpoints: {
+        1500: {spaceBetween: 40,},
+        1000: {spaceBetween: 30,},
+        320: {spaceBetween: 20,},
+      }
     });
     // 2. Инициализируем главный слайдер и связываем его с нижним через параметр thumbs
     var galleryMain = new Swiper(".myNewsMainSwiper", {

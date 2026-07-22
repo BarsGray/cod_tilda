@@ -7,7 +7,7 @@ function startCloning() {
 
     if (!zeroBlock || !standardProducts) return;
     var standardProd = standardProducts.querySelectorAll('.js-feed-post');
-    if (standardProd.length < 2) return; 
+    if (standardProd.length === 0) return;
     
     if (zeroBlock.classList.contains('js-already-cloned')) return;
     zeroBlock.classList.add('js-already-cloned');
@@ -33,9 +33,11 @@ function startCloning() {
         var cTitle = clonedCard.querySelectorAll('.js-custom-title .tn-atom');
         cTitle.forEach(function(el) { el.innerText = title; });
         var cText = clonedCard.querySelector('.js-custom-description .tn-atom');
-        if (cText) cText.innerText = text;
+        if (cText) cText.innerText = text.length > 260 ? text.slice(0, 260).trimEnd().replace(/[\s.,!?;:…«»"'()\-]+\S*$/, '') + '...': text;
         var cBtn = clonedCard.querySelector('.my_btn_ob_prod .tn-atom');
+        var mainLink = clonedCard.querySelector('.main_link');
         if (cBtn) cBtn.href = realProductLink;
+        if (mainLink) mainLink.href = realProductLink;
         var cImg = clonedCard.querySelector('.js-custom-img .tn-atom');
         if (cImg && imgUrl) {
           cImg.style.backgroundImage = 'url("' + imgUrl + '")';
@@ -50,6 +52,15 @@ function startCloning() {
     zeroContainer.style.height = 'auto';
     gridContainer.style.position = 'relative';
     zeroBlock.querySelector('.t396__carrier').style.height = 'auto';
+
+    console.log(standardProd.length);
+    console.log(standardProd.length % 2);
+    if(standardProd.length % 2 === 0 && standardProd.length > 1) {
+        console.log(standardProd.length % 2);
+        let index = (standardProd.length >= 3) ? standardProd.length - 1 : 1;
+        let lastProd = zeroBlock.querySelectorAll('.my-product-card');
+        lastProd[index].style.borderBottom = 'none';
+    }
     observerProd.disconnect();
 }
 
